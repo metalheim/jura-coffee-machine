@@ -1,5 +1,10 @@
 # jura-coffee-machine
 
+Fork of the awesome work of [Hajo Noerenberg](https://github.com/hn/jura-coffee-machine)
+
+I am re-implementing the webinterface, to make it more accessible. 
+No breaking changes to the API, so you can use this as a replacement for the original project.
+
 ## Tech
 `jura-e65-coffee-machine.txt` lists some technical data (reverse engineered years ago) and `jura-e65-circuit-board.jpg` shows PCB photos of the Jura Impressa E65 coffee machine.
 
