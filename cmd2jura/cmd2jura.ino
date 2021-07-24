@@ -29,6 +29,7 @@
 
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
+#include <FS.h>
 #include <WiFiManager.h>
 #include <SoftwareSerial.h>
 
@@ -115,32 +116,18 @@ void handle_api() {
 
 void handle_web() {
   String html;
-
-  html  = "<!DOCTYPE html><html><head>";
-  html += "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta charset=\"UTF-8\">";
-  html += "<style>*{ margin:0.5rem 0;} body {padding: 0 1rem;  color: #222;  background: #fff;  font: 100% system-ui;} @media (prefers-color-scheme: dark) {  body {    color: #eee;    background: #121212;  }";
-  html += "</style></head>";
-  html += "<body><h1>&#9749; Jura Impressa C5</h1>";
-  html += "<form onsubmit=\"return s(this)\">";
-  html += "<select id=\"c\" size=\"10\" style=\"width: 100%; height: auto; font-size: 1.25rem; -webkit-appearance: none;\">";
-  html += "<option value=\"AN:01\">🟢 Power on</option>"; 
-  html += "<option value=\"RT:00\">☕ Espresso</option>";
-  html += "<option value=\"RT:00\">☕☕ Espresso</option>";
-  html += "<option value=\"RT:00\">☕ Coffee</option>";
-  html += "<option value=\"RT:00\">☕☕ Coffee</option>";
-  html += "<option value=\"TY:\">🖶 Get Type of Machine</option>";
-  html += "<option value=\"AN:02\">⭕ Power off</option>";
-  html += "</select><br><br><input type=\"submit\" style=\"width: 100%; height:3em; border-radius:0.5em\">";
-  html += "</form>";
-  html += "<details><summary>Response Log</summary><ul style=\"font-family: monospace\" id=\"r\"></ul></details><script>function s(f) { var x = new XMLHttpRequest();";
-  html += "x.open('POST', '/api', true); x.onreadystatechange = function() { if(x.readyState === XMLHttpRequest.DONE";
-  //html += " && x.status === 200) { var r = document.getElementById('r'); r.innerHTML = '<li>' + Date().toLocaleString() + ";
-  html += " ) { var r = document.getElementById('r'); r.innerHTML = '<li>' + Date().toLocaleString() + ";
-  html += "':&emsp;' + f.c.value + '&emsp;&#8594;&emsp;' + x.responseText + '</li>' + r.innerHTML; }}; x.send(f.c.value);";
-  html += "return false;}</script></body></html>";
+  String path = "/UI.html";
   
   webserver.sendHeader("charset","UTF-8");
-  webserver.send(200, "text/html", html);
+   if (SPIFFS.exists(path)) {                            // If the file exists
+    File uifile = SPIFFS.open(path, "r");                 // Open it
+    size_t sent = webserver.streamFile(uifile, "text/html"); // And send it to the client
+    uifile.close();                                       // Then close the file again
+  }else{
+    html = ("Failed to open UI html file for reading. ");
+    html += ("Please upload it to the SPIFFS File system using the ESP Upload tool");
+    webserver.send(200, "text/plain", html);
+  }
 }
 
 void setup() {
