@@ -1,0 +1,78 @@
+<!DOCTYPE html><html><head>
+<meta name="viewport" content="width=device-width, initial-scale=1"><meta charset="UTF-8">
+<style>
+	*{ 
+		box-sizing:border-box;
+	} 
+	input, select, textarea{
+		border:1px solid #444;
+		padding:16px;
+	}
+	option{
+		padding: 5px;
+	}
+	input, select, details, textarea{
+		margin:0.5rem 0;
+		width:100%;
+		border-radius:6px;
+		font-size:1.2rem;
+	}
+	input[type=submit]{
+	}
+	#log{
+		width:100%;
+		font-size:0.75rem;
+		font-family:monospace;
+		min-height:8em;
+	}
+	body {
+		padding: 0 1rem;  
+		color: #222;  
+		background: #fff;  
+		font: 100% system-ui;
+	}
+	@media (prefers-color-scheme: dark) {
+		body, *{
+			color: rgb(201, 209, 217);
+			background: #010409;  
+		}
+	}
+</style>
+</head>
+<body>
+<h1>&#9749; Jura Impressa C5</h1>
+	<form onsubmit="return s(this)">
+		<select id="quickcommand" size="7" onChange="m(this)">
+			<option value="AN:01">🟢⠀⠀⠀Power on</option> 
+			<option value="RT:00">☕⠀⠀⠀Espresso</option>
+			<option value="RT:00">☕☕⠀Espresso</option>
+			<option value="RT:00">☕⠀⠀⠀Coffee</option>
+			<option value="RT:00">☕☕⠀Coffee</option>
+			<option value="TY:">🛈⠀⠀⠀⠀Get Type of Machine</option>
+			<option value="AN:02">⭕⠀⠀⠀Power off</option>
+		</select>
+		<details><summary>Manual Command</summary><input type="text" id="command"></input></details>
+		<input type="submit">
+</form>
+<details><summary>Response Log</summary><textarea id="log"></textarea></details>
+<script>
+function m(f) {
+	this.command.value = this.quickcommand.value;
+}
+function s(f) {
+    var x = new XMLHttpRequest();
+    //x.open('POST', '/api', true);
+    x.open('POST', 'http://jura/api', true);
+    x.onreadystatechange = function() {
+        //if (x.readyState === XMLHttpRequest.DONE && x.status === 200) {
+        if (x.readyState === XMLHttpRequest.DONE) {
+            var r = document.getElementById('log');
+            log.value = new Date().toLocaleTimeString() + ' - ' + f.command.value + ' - ' +  x.responseText + '\r\n' + log.value;
+        }
+    };
+    x.send(f.command.value);
+    return false;
+}
+</script>
+</body>
+</html>
