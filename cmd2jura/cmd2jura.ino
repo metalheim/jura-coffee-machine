@@ -88,6 +88,8 @@ void handle_api() {
   String cmd;
   String result;
 
+  webserver.sendHeader("Access-Control-Allow-Origin","*");
+  
   if (webserver.method() != HTTP_POST) {
     webserver.send(405, "text/plain", "Method Not Allowed");
     return;
