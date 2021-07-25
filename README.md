@@ -4,6 +4,8 @@ This allows you to control your Jura coffee maker from a webinterface (power on 
 It also exposes a simple REST / POST API that can be utilized by Home automaization software like IO Broker, Homie, ITTT etc.
 
 Fork of the awesome work of [Hajo Noerenberg](https://github.com/hn/jura-coffee-machine)
+
+
 I re-implemented the webinterface, to make it more accessible. 
 No breaking changes to the API, so you can use this as a replacement for the original project.
 
@@ -26,7 +28,7 @@ Once you put in your Wifi Credentials in WifiManager, you should be able access 
 
 8. Connect ESP8266 Board to your Jura coffee makers "Service Port".
 
-If you are using a [Wemos D1 mini](https://www.wemos.cc/product/d1-mini.html) (or clone) board, connect it up like this: 
+If you are using a [Wemos D1 mini](https://www.wemos.cc/product/d1-mini.html) (or similar) board, connect it up like this: 
 
 ![ESP8266](https://github.com/metalheim/jura-coffee-machine/blob/master/images/jura-esp8266-interface.jpg "Adafruit HUZZAH")
 
@@ -37,7 +39,9 @@ If you are using a [Wemos D1 mini](https://www.wemos.cc/product/d1-mini.html) (o
 ![Light Mode](https://github.com/metalheim/jura-coffee-machine/blob/master/images/UI.html_Pixel2_prefer-light.png)
 
 ## API
-Only accepts POST requests, the request body should be the "JURA Command".
+The API is available at `/api`, so `http://jura/api`. 
+
+It only accepts POST requests, the request body should be the "JURA Command" (f.e. `AN:01`).
 The response will be plain text from the JURA serial connection.
 
 ```
