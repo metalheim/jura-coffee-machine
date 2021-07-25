@@ -42,6 +42,7 @@ If you are using a [Wemos D1 mini](https://www.wemos.cc/product/d1-mini.html) (o
 The API is available at `/api`, so `http://jura/api`. 
 
 It only accepts POST requests, the request body should be the "JURA Command" (f.e. `AN:01`).
+For a list of commands, check out [this awesome repository](https://github.com/Jutta-Proto/protocol-cpp#jura-commands)
 The response will be plain text from the JURA serial connection.
 
 ```
