@@ -33,8 +33,8 @@ If you are using a [Wemos D1 mini](https://www.wemos.cc/product/d1-mini.html) (o
 
 ## Web UI
 
-![Dark Mode](https://github.com/metalheim/jura-coffee-machine/blob/master/images/jura-coffee-machine_helpers_UI.html(Pixel 2) (prefer-dark).png)
-![Light Mode](https://github.com/metalheim/jura-coffee-machine/blob/master/images/jura-coffee-machine_helpers_UI.html(Pixel 2) (prefer-dark).png)
+![Dark Mode](https://github.com/metalheim/jura-coffee-machine/blob/master/images/UI.html_Pixel 2_prefer-dark.png)
+![Light Mode](https://github.com/metalheim/jura-coffee-machine/blob/master/images/UI.html_Pixel 2_prefer-light.png)
 
 ## API
 Only accepts POST requests, the request body should be the "JURA Command".
