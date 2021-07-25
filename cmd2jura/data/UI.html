@@ -7,15 +7,16 @@
 			*{ 
 				box-sizing:border-box;
 			} 
-			input, select, textarea{
+			input, #quickcommand, textarea{
 				border:1px solid #444;
 				padding:16px;
 			}
-			option{
+			label{
 				padding: 5px;
 				overflow:hidden;
+				display:block;
 			}
-			input, select, details, textarea{
+			input, #quickcommand, label, details, textarea{
 				margin:0.5rem 0;
 				width:100%;
 				border-radius:6px;
@@ -23,6 +24,17 @@
 			}
 			input[type=submit]{
 				cursor:pointer;
+			}
+			input[type=radio]{
+				display:none;
+			}
+			input[type=radio]+label {
+				font-weight: normal;
+			}
+			input[type=radio]:checked+label {
+				font-weight: bold;
+				background-color:rgb(239, 239, 239);
+				border: 1px solid #444;
 			}
 			#log{
 				width:100%;
@@ -41,7 +53,7 @@
 					color: rgb(201, 209, 217);
 					background: #010409;  
 				}
-				select, option{
+				#quickcommand, #quickcommand summary, label{
 					background-color:rgb(33, 38, 45);
 				}
 				input[type=submit]{
@@ -51,35 +63,55 @@
 					background-color:rgb(40, 46, 51);
 					border-color:rgb(110, 118, 129);
 				}
+				input[type=radio]:checked+label {
+					background-color:rgb(40, 46, 51);
+					border-color:rgb(110, 118, 129);
+				}
 			}
 		</style>
 	</head>
 	<body>
 		<h1>&#9749; Jura Impressa C5</h1>
-			<form onsubmit="return s(this)">
-				<select id="quickcommand" size="7" onChange="m(this)">
-					<option value="AN:01">🟢⠀⠀⠀Power on</option> 
-					<option value="FA:04">☕⠀⠀⠀Espresso</option>
-					<option value="FA:05">☕☕⠀Espresso</option>
-					<option value="FA:06">☕⠀⠀⠀Coffee</option>
-					<option value="FA:07">☕☕⠀Coffee</option>
-					<option value="TY:"  >🛈⠀⠀⠀⠀Get Type of Machine</option>
-					<option value="AN:02">⭕⠀⠀⠀Power off</option>
-				</select>
-				<details><summary>type in manual command</summary><input type="text" id="command"></input></details>
+			<form onsubmit="return s(this)" onChange="m(this)">
+				<details id="quickcommand" size="7"  open>
+					<summary>quick commands</summary>
+					<input type="radio" value="AN:01" name="radios" id="poweron">
+					<label for="poweron">🟢⠀⠀⠀Power on </label>
+					<input type="radio" value="FA:04" name="radios" id="fn1">
+					<label for="fn1">☕⠀⠀⠀Espresso </label>
+					<input type="radio" value="FA:05" name="radios" id="fn2">
+					<label for="fn2">☕☕⠀Espresso </label>
+					<input type="radio" value="FA:06" name="radios" id="fn3">
+					<label for="fn3">☕⠀⠀⠀Coffee </label>
+					<input type="radio" value="FA:07" name="radios" id="fn4">
+					<label for="fn4">☕☕⠀Coffee</label>
+					<input type="radio" value="TY:" name="radios" id="info">
+					<label for="info">🛈⠀⠀⠀⠀Get Type of Machine </label>
+					<input type="radio" value="AN:02" name="radios" id="poweroff">
+					<label for="poweroff">⭕⠀⠀⠀Power off</label>
+				</details>
+				<details>
+					<summary>type in manual command</summary>
+					<input type="text" id="command"></input>
+				</details>
 				<input type="submit">
 		</form>
 		<details><summary>response log</summary><textarea id="log"></textarea></details>
 		<script>
+			//Cycle through Radio buttons and copy selected value to command input
 			function m(f) {
-				this.command.value = this.quickcommand.value;
+					for (const rb of f.radios) {
+					if (rb.checked) {
+						this.command.value = rb.value;
+						break;
+					}
+				}
 			}
 			function s(f) {
 				var x = new XMLHttpRequest();
 				x.open('POST', '/api', true);
 				x.onreadystatechange = function() {
 					//Also show errors
-					//if (x.readyState === XMLHttpRequest.DONE && x.status === 200) { 
 					if (x.readyState === XMLHttpRequest.DONE) {
 						var r = document.getElementById('log');
 						log.value = new Date().toLocaleTimeString() + ' - ' + f.command.value + ' - ' +  x.responseText + '\r\n' + log.value;
