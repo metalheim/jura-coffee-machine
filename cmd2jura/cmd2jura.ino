@@ -29,7 +29,7 @@
 
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
-#include <FS.h>
+#include "FS.h"
 #include <WiFiManager.h>
 #include <SoftwareSerial.h>
 
@@ -85,6 +85,25 @@ String cmd2jura(String outbytes) {
   return inbytes.substring(0, inbytes.length() - 2);
 }
 
+boolean InitalizeFileSystem() 
+{
+  bool initok = false;
+  initok = SPIFFS.begin();
+  if (!(initok)) // Format SPIFS, of not formatted. - Try 1
+  {
+    //Serial.println("Format SPIFFS");
+    SPIFFS.format();
+    initok = SPIFFS.begin();
+  }
+  if (!(initok)) // Format SPIFS, of not formatted. - Try 2
+  {
+    SPIFFS.format();
+    initok = SPIFFS.begin();
+  }
+  //if (initok) { Serial.println("SPIFFS is OK"); } else { Serial.println("SPIFFS is not OK"); }
+  return initok;
+}
+
 void handle_api() {
   String cmd;
   String result;
@@ -115,18 +134,18 @@ void handle_api() {
 }
 
 void handle_web() {
-  String html;
+  String error;
   String path = "/UI.html";
   
   webserver.sendHeader("charset","UTF-8");
-   if (SPIFFS.exists(path)) {                            // If the file exists
+  if (SPIFFS.exists(path)) {                            // If the file exists
     File uifile = SPIFFS.open(path, "r");                 // Open it
     size_t sent = webserver.streamFile(uifile, "text/html"); // And send it to the client
     uifile.close();                                       // Then close the file again
   }else{
-    html = ("Failed to open UI html file for reading. ");
-    html += ("Please upload it to the SPIFFS File system using the ESP Upload tool");
-    webserver.send(200, "text/plain", html);
+    error = ("Failed to open UI html file for reading.\r\n");
+    error += ("Please upload it to the SPIFFS File system using the ESP Upload tool");
+    webserver.send(200, "text/plain", error);
   }
 }
 
@@ -137,6 +156,8 @@ void setup() {
 
   WiFiManager wifimanager;
   wifimanager.autoConnect(WIFINAME);
+  
+  InitalizeFileSystem();
 
   webserver.on("/", handle_web);
   webserver.on("/api", handle_api);
