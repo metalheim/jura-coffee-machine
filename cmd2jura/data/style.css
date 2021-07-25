@@ -1,0 +1,64 @@
+*{ 
+	box-sizing:border-box;
+} 
+input, #quickcommand, textarea{
+	border:1px solid #444;
+	padding:16px;
+}
+label{
+	padding: 5px;
+	overflow:hidden;
+	display:block;
+}
+input, #quickcommand, label, details, textarea{
+	margin:0.5rem 0;
+	width:100%;
+	border-radius:6px;
+	font-size:1.2rem;
+}
+input[type=submit]{
+	cursor:pointer;
+}
+input[type=radio]{
+	display:none;
+}
+input[type=radio]+label {
+	font-weight: normal;
+}
+input[type=radio]:checked+label {
+	font-weight: bold;
+	background-color:rgb(239, 239, 239);
+	border: 1px solid #444;
+}
+#log{
+	width:100%;
+	font-size:0.75rem;
+	font-family:monospace;
+	height:10em;
+}
+body {
+	padding: 0 1rem;  
+	color: #222;  
+	background: #fff;  
+	font: 100% system-ui;
+}
+@media (prefers-color-scheme: dark) {
+	body, *{
+		color: rgb(201, 209, 217);
+		background: #010409;  
+	}
+	#quickcommand, #quickcommand summary, label{
+		background-color:rgb(33, 38, 45);
+	}
+	input[type=submit]{
+		background-color:rgb(33, 38, 45);
+	}
+	input[type=submit]:hover{
+		background-color:rgb(40, 46, 51);
+		border-color:rgb(110, 118, 129);
+	}
+	input[type=radio]:checked+label {
+		background-color:rgb(40, 46, 51);
+		border-color:rgb(110, 118, 129);
+	}
+}
