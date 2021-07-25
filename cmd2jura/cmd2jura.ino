@@ -1,4 +1,3 @@
-
 /*
 
    cmd2jura.ino V1.00
@@ -85,7 +84,7 @@ String cmd2jura(String outbytes) {
   return inbytes.substring(0, inbytes.length() - 2);
 }
 
-boolean InitalizeFileSystem() 
+boolean InitalizeFileSystem()
 {
   bool initok = false;
   initok = SPIFFS.begin();
@@ -108,8 +107,8 @@ void handle_api() {
   String cmd;
   String result;
 
-  webserver.sendHeader("Access-Control-Allow-Origin","*");
-  
+  webserver.sendHeader("Access-Control-Allow-Origin", "*");
+
   if (webserver.method() != HTTP_POST) {
     webserver.send(405, "text/plain", "Method Not Allowed");
     return;
@@ -136,16 +135,28 @@ void handle_api() {
 void handle_web() {
   String error;
   String path = "/UI.html";
-  
-  webserver.sendHeader("charset","UTF-8");
+
+  webserver.sendHeader("charset", "UTF-8");
   if (SPIFFS.exists(path)) {                            // If the file exists
     File uifile = SPIFFS.open(path, "r");                 // Open it
     size_t sent = webserver.streamFile(uifile, "text/html"); // And send it to the client
     uifile.close();                                       // Then close the file again
-  }else{
+  } else {
     error = ("Failed to open UI html file for reading.\r\n");
     error += ("Please upload it to the SPIFFS File system using the ESP Upload tool");
     webserver.send(200, "text/plain", error);
+  }
+}
+
+void handle_css() {
+  String error;
+  String path = "/style.css";
+
+  webserver.sendHeader("charset", "UTF-8");
+  if (SPIFFS.exists(path)) {                            // If the file exists
+    File cssfile = SPIFFS.open(path, "r");                 // Open it
+    size_t sent = webserver.streamFile(cssfile, "text/css"); // And send it to the client
+    cssfile.close();                                       // Then close the file again
   }
 }
 
@@ -156,10 +167,11 @@ void setup() {
 
   WiFiManager wifimanager;
   wifimanager.autoConnect(WIFINAME);
-  
+
   InitalizeFileSystem();
 
   webserver.on("/", handle_web);
+  webserver.on("/style.css", handle_css);
   webserver.on("/api", handle_api);
   webserver.begin();
 
