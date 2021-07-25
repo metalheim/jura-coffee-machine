@@ -10,10 +10,11 @@ No breaking changes to the API, so you can use this as a replacement for the ori
 # Step-By-Step Setup
 
 1. Download this repository
-2. Install the Arduino IDE (if you don't have it already)
+2. Install the Arduino IDE (if you don't have it already) and open it
 3. Add the Board files to your Arduino IDE (File -> Settings -> Additional Board Manager URLs)
 4. Connect ESP8266 board to your computer
 5. Choose correct board and COM Port
+6. open `cmd2jura/cmd2jura.ino` in the Arduino IDE
 6. Install [WiFiManager](https://github.com/tzapu/WiFiManager) as library (Sketch->Libraries->Install from .zip)
 7. Compile and upload .ino 
 8. Upload Sketch Data (Tools -> ESP8266 Sketch Data Upload)
