@@ -1,6 +1,14 @@
 *{ 
 	box-sizing:border-box;
 } 
+body {
+	color: #222;
+	background: #fff;  
+	font: 100% system-ui;
+	padding:0;
+	margin:0;
+    overflow-x: hidden;
+}
 input, #quickcommand, textarea{
 	border:1px solid #444;
 	padding:16px;
@@ -22,7 +30,7 @@ input, #quickcommand, label, details, textarea{
 	border-radius:6px;
 	font-size:1.2rem;
 }
-input[type=submit]{
+input[type=submit], label, summary{
 	cursor:pointer;
 }
 input[type=radio]{
@@ -42,11 +50,16 @@ input[type=radio]:checked+label {
 	font-family:monospace;
 	height:10em;
 }
-body {
-	padding: 0 1rem;  
-	color: #222;  
-	background: #fff;  
-	font: 100% system-ui;
+form, #logspoiler{
+	margin: 0 1rem;  
+}
+header{
+	background-color:rgb(36, 41, 46);
+	color: rgba(255, 255, 255, 0.7);
+	width:100vw;
+	font-size:1.25rem;
+	padding: 0.5em 1em;
+	margin:0 0 1em 0;
 }
 @media (prefers-color-scheme: dark) {
 	body, *{

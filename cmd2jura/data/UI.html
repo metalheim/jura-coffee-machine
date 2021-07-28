@@ -6,53 +6,53 @@
 		<link rel="stylesheet" href="style.css">
 	</head>
 	<body>
-		<h1>&#9749; Jura Coffee Machine</h1>
-			<form onsubmit="return s(this)" onChange="m(this)">
-				<details id="quickcommand" size="7"  open>
-					<summary>quick commands</summary>
-					<input type="radio" value="AN:01" name="radios" id="poweron">
-					<label for="poweron">
-						<span class="icon">🟢</span>
-						Power on
-					</label>
-					<input type="radio" value="FA:04" name="radios" id="fn1">
-					<label for="fn1">
-						<span class="icon">☕</span>
-						Espresso 
-					</label>
-					<input type="radio" value="FA:05" name="radios" id="fn2">
-					<label for="fn2">
-						<span class="icon">☕☕</span>
-						Espresso
-					</label>
-					<input type="radio" value="FA:06" name="radios" id="fn3">
-					<label for="fn3">
-						<span class="icon">☕</span>
-						Coffee
-					</label>
-					<input type="radio" value="FA:07" name="radios" id="fn4">
-					<label for="fn4">
-						<span class="icon">☕☕</span>
-						Coffee
-					</label>
-					<input type="radio" value="TY:" name="radios" id="info">
-						<label for="info">
-						<span class="icon">🛈</span>
-						Get Type of Machine
-					</label>
-					<input type="radio" value="AN:02" name="radios" id="poweroff">
-					<label for="poweroff">
-						<span class="icon">⭕</span>
-						Power off
-					</label>
-				</details>
-				<details>
-					<summary>type in manual command</summary>
-					<input type="text" id="command"></input>
-				</details>
-				<input type="submit">
+		<header>&#9749; Jura Coffee Machine</header>
+		<form onsubmit="return s(this)" onChange="m(this)">
+			<details id="quickcommand" size="7"  open>
+				<summary>quick commands</summary>
+				<input type="radio" value="AN:01" name="radios" id="poweron">
+				<label for="poweron">
+					<span class="icon">🟢</span>
+					Power on
+				</label>
+				<input type="radio" value="FA:04" name="radios" id="fn1">
+				<label for="fn1">
+					<span class="icon">☕</span>
+					Espresso 
+				</label>
+				<input type="radio" value="FA:05" name="radios" id="fn2">
+				<label for="fn2">
+					<span class="icon">☕☕</span>
+					Espresso
+				</label>
+				<input type="radio" value="FA:06" name="radios" id="fn3">
+				<label for="fn3">
+					<span class="icon">☕</span>
+					Coffee
+				</label>
+				<input type="radio" value="FA:07" name="radios" id="fn4">
+				<label for="fn4">
+					<span class="icon">☕☕</span>
+					Coffee
+				</label>
+				<input type="radio" value="TY:" name="radios" id="info">
+					<label for="info">
+					<span class="icon">🛈</span>
+					Get Type of Machine
+				</label>
+				<input type="radio" value="AN:02" name="radios" id="poweroff">
+				<label for="poweroff">
+					<span class="icon">⭕</span>
+					Power off
+				</label>
+			</details>
+			<details>
+				<summary>type in manual command</summary>
+				<input type="text" id="command"></input>
+			</details>
+			<input type="submit">
 		</form>
-		<details><summary>response log</summary><textarea id="log"></textarea></details>
+		<details id="logspoiler"><summary>response log</summary><textarea id="log"></textarea></details>
 		<script>
 			//Cycle through Radio buttons and copy selected value to command input
 			function m(f) {
