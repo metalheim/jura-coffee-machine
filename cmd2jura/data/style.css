@@ -10,6 +10,12 @@ label{
 	overflow:hidden;
 	display:block;
 }
+.icon{
+	background:inherit !important;
+	display:inline-block;
+	width:3em;
+	margin-right:1em;
+}
 input, #quickcommand, label, details, textarea{
 	margin:0.5rem 0;
 	width:100%;
